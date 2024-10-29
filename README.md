@@ -1,5 +1,6 @@
+# Deployment_to_Serverless_Cheatshee
 This is a cheatsheet for use case you want to convert your OpenShift Deployment to OpenShift Serverless Deployment(aka knative service,ksvc)
-# Check list for you deployment:
+## Check list for you deployment:
 1. **SIGTERM Handling**
     SIGTERM Handling Knative sends a SIGTERM signal to your pod when autoscaling to zero. It's crucial that your pod handles SIGTERM gracefully to exit accordingly; otherwise, it lingers without exiting and won't receive traffic.
 
