@@ -80,8 +80,11 @@ This is a cheatsheet for use case you want to convert your OpenShift Deployment 
 
 1. Event Driven
 
-    Knative svc is very good fit for event driven architecture. However how knative svc can be trigger or receive event when it's not active. So in knative svc context, you need to configure event source (or other similar component as broker, channel etc), this event source would connect to your existing event store such as kafka. You need to configure your application to a POST method in "/" path so that knative event source can automatically send event to your service. 
+    Knative services are a great fit for event-driven architecture. However, Knative services need to be configured to receive events even when they are not active. To achieve this, configure an event source that connects to your existing event store, such as Kafka. When the event source receives a message from Kafka, it will send an HTTP POST request to your application, which should be configured as a Sink in the Knative eventing context.
 
+    Configure your application with a POST method at the "/" path so that the Knative event source can automatically send events to your service. This approach requires minimal changes to your existing event-driven application, as the POST method serves as a way to receive messages without handling them. Ensure that the consumer-group-id for your consumer application and the event source are different to avoid conflicts.
+
+    An alternative approach is to use Knative’s POST method to both receive and handle message consumption. This eliminates the need for your existing consumer logic, allowing the application to receive messages via POST without integrating directly with the event store like Kafka. This is ideal for new applications but may require refactoring for existing ones.
 
 
 1. API Gateway integration
