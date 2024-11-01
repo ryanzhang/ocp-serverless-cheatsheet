@@ -34,12 +34,13 @@ This is a cheatsheet for use case you want to convert your OpenShift Deployment 
     ```
 1. **Long Process Request Handling**
 
-    Knative defaults to terminating your pod after 30 seconds (param: scale-to-zero-grace-period). To handle longer requests, configure per revision by tuning scale-to-zero-pod-retention-period:
+    Knative defaults to terminating your pod after 30 seconds (param: scale-to-zero-grace-period). To handle longer requests, configure per revision by tuning scale-to-zero-pod-retention-period, please check the below cheatsheet for configuration example.
 
-    If it's hard to decide how long to keep the retention-period, it's possible to send a probe to your ksvc from your pod, send HTTP GET to http://your-knative-internal-ksvc-endpoint, eg: 
+    But if in your situation, it's hard to decide how long to keep the retention-period, it's possible to send a probe to your ksvc from your pod to make the serverless not terminate the pod until the job is done, for example you can send HTTP GET to http://your-knative-internal-ksvc-endpoint every 20 seconds please bear in mind the default grace period is 30 seconds in order to keep it running, eg: 
     ```bash
     curl http://knative-hello-world.my-namespace.svc.cluster.local/health
     ```
+
 1. Startup Time
     
     Knative autoscaling requires attention to startup time. Tips for faster startup:
